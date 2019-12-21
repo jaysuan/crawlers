@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from scrapy.http import FormRequest
+from scrapy.loader import ItemLoader
+
+from crawlers.items import Job
 
 
 class OnlinejobsSpider(scrapy.Spider):
@@ -20,8 +23,9 @@ class OnlinejobsSpider(scrapy.Spider):
             })
 
     def parse(self, response):
-        print(f"Response: {response.text}")
         job_posts = response.css('.latest-job-post')
         for job_post in job_posts:
-            position = job_post.css('a > dl > dt > h4')
-            print(position)
+            loader = ItemLoader(item=Job(), selector=job_post)
+            loader.add_css('position', 'h4::text')
+            loader.add_css('job_type', 'h4 > span::text')
+            yield loader.load_item()
