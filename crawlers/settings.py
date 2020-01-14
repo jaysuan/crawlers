@@ -91,6 +91,10 @@ COOKIES_ENABLED = True
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 
-FEED_FORMAT = 'csv'
-FEED_URI = ''
-FEED_EXPORT_FIELDS = ['position', 'job_type']
+# FEED_FORMAT = 'csv'
+# FEED_URI = ''
+# FEED_EXPORT_FIELDS = ['position', 'job_type']
+
+ITEM_PIPELINES = {
+    "crawlers.pipelines.GoogleSheetExportPipeline": 100
+}

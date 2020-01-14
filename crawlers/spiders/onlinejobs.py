@@ -28,4 +28,5 @@ class OnlinejobsSpider(scrapy.Spider):
             loader = ItemLoader(item=Job(), selector=job_post)
             loader.add_css('position', 'h4::text')
             loader.add_css('job_type', 'h4 > span::text')
+            loader.add_css('link', 'a::attr(href)')
             yield loader.load_item()
